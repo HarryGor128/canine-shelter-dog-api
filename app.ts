@@ -1,12 +1,11 @@
 import Koa from 'koa';
 import Router from 'koa-router';
+import helloWorld from './scr/helloWorld';
 
 const koa = new Koa();
 const router = new Router();
 
-router.get('/', async (ctx) => {
-    ctx.body = 'Hello world';
-});
+helloWorld(router);
 
 koa.use(router.routes());
 koa.listen(3003);
