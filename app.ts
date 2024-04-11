@@ -1,11 +1,11 @@
 import Koa from 'koa';
 import Router from 'koa-router';
-import helloWorld from './scr/helloWorld';
+import firebaseConnect from './scr/startup/firebaseConnect';
 
 const koa = new Koa();
 const router = new Router();
 
-helloWorld(router);
+firebaseConnect();
 
 koa.use(router.routes());
 koa.listen(3003);
