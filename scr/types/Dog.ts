@@ -1,5 +1,5 @@
 class Dog {
-    id: string;
+    id: number;
     name: string;
     dateOfBirth: { seconds: number; nanoseconds: number }; // Timestamp, UTC Epoch time
     sex: 'M' | 'F';
@@ -7,7 +7,7 @@ class Dog {
     description: string;
 
     constructor() {
-        this.id = '';
+        this.id = 0;
         this.name = '';
         this.dateOfBirth = { seconds: 0, nanoseconds: 0 };
         this.sex = 'M';
@@ -15,3 +15,5 @@ class Dog {
         this.description = '';
     }
 }
+
+export default Dog;

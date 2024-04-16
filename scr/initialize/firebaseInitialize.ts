@@ -1,7 +1,8 @@
 import { initializeApp } from 'firebase/app';
 
 import firebaseConfig from '../config/firebaseConfig';
-import { getFirestore as getStore } from 'firebase/firestore';
+import { collection, doc, getFirestore } from 'firebase/firestore';
+import CollectionPath from '../const/CollectionPath';
 
 const firebaseInitialize = () => {
     // Initialize Firebase
@@ -10,9 +11,19 @@ const firebaseInitialize = () => {
         '🚀 ~ file: firebaseInitialize.ts:8 ~ firebaseInitialize ~ initialize:',
         initialize,
     );
-    const getFirestore = getStore(initialize);
+    const db = getFirestore(initialize);
 
-    return { getFirestore };
+    const docRef = async (collectionPath: CollectionPath, docId: string) => {
+        const docRef = await doc(db, collectionPath, docId);
+        return docRef;
+    };
+
+    const collectionRef = async (collectionPath: CollectionPath) => {
+        const collectionRef = await collection(db, collectionPath);
+        return collectionRef;
+    };
+
+    return { docRef, collectionRef };
 };
 
 export default firebaseInitialize;
