@@ -58,7 +58,7 @@ const firebaseServices = {
             return Promise.resolve({ result: true, msg: '' });
         } catch (error) {
             console.log('🚀 ~ file: firebaseServices.ts:63 ~ error:', error);
-            return Promise.reject({ result: false, msg: error.toString() });
+            return Promise.resolve({ result: false, msg: error.toString() });
         }
     },
 
@@ -68,10 +68,10 @@ const firebaseServices = {
     ): Promise<{ result: boolean; msg: string }> {
         try {
             await deleteDoc(await docRef(collectionPath, docId));
-            return { result: true, msg: '' };
+            return Promise.resolve({ result: true, msg: '' });
         } catch (error) {
             console.log('🚀 ~ file: firebaseServices.ts:72 ~ error:', error);
-            return { result: false, msg: error.toString() };
+            return Promise.resolve({ result: false, msg: error.toString() });
         }
     },
 
