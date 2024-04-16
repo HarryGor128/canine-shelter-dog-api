@@ -10,7 +10,7 @@ const authControllers = {
         const loginInfo = ctx.request.body as Login;
 
         // Missing field
-        if (!objTypeChecking(loginInfo, new Registration())) {
+        if (!objTypeChecking(loginInfo, new Login())) {
             ctx.status = 400;
             return;
         }
