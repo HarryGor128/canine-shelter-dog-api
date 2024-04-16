@@ -2,6 +2,7 @@ import CollectionPath from '../const/CollectionPath';
 import {
     DocumentData,
     OrderByDirection,
+    deleteDoc,
     getDoc,
     getDocs,
     limit,
@@ -61,7 +62,18 @@ const firebaseServices = {
         }
     },
 
-    async deleteDoc(collectionPath: CollectionPath, docId: string) {},
+    async deleteDoc(
+        collectionPath: CollectionPath,
+        docId: string,
+    ): Promise<{ result: boolean; msg: string }> {
+        try {
+            await deleteDoc(await docRef(collectionPath, docId));
+            return { result: true, msg: '' };
+        } catch (error) {
+            console.log('🚀 ~ file: firebaseServices.ts:72 ~ error:', error);
+            return { result: false, msg: error.toString() };
+        }
+    },
 
     async downloadFile(remoteFilePath: string) {},
 

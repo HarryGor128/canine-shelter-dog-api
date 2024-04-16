@@ -71,7 +71,18 @@ const dogControllers = {
     },
 
     // Delete dog info by id
-    deleteDogInfo: async (ctx: Koa.Context) => {},
+    deleteDogInfo: async (ctx: Koa.Context) => {
+        const { id } = ctx.query;
+
+        const result = await firebaseServices.deleteDoc('dog', id as string);
+
+        if (result.result) {
+            ctx.status = 200;
+        } else {
+            ctx.status = 500;
+            ctx.message = result.msg;
+        }
+    },
 };
 
 export default dogControllers;
