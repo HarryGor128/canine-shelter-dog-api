@@ -61,12 +61,6 @@ const firebaseServices = {
         }
     },
 
-    async updateDoc(
-        collectionPath: CollectionPath,
-        docId: string,
-        updateObj: any,
-    ) {},
-
     async deleteDoc(collectionPath: CollectionPath, docId: string) {},
 
     async downloadFile(remoteFilePath: string) {},

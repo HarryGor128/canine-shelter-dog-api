@@ -49,7 +49,26 @@ const dogControllers = {
     },
 
     // Update dog info by id
-    updateDogInfo: async (ctx: Koa.Context) => {},
+    updateDogInfo: async (ctx: Koa.Context) => {
+        const updateRecord = ctx.request.body as Dog;
+
+        if (objTypeChecking(updateRecord, new Dog())) {
+            ctx.status = 400;
+        }
+
+        const result = await firebaseServices.addDoc(
+            'dog',
+            updateRecord.id,
+            updateRecord,
+        );
+
+        if (result.result) {
+            ctx.status = 200;
+        } else {
+            ctx.status = 500;
+            ctx.message = result.msg;
+        }
+    },
 
     // Delete dog info by id
     deleteDogInfo: async (ctx: Koa.Context) => {},
