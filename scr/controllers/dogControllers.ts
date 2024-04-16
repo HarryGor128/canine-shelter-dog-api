@@ -7,7 +7,10 @@ const dogControllers = {
 
         ctx.body = result ? result : [];
     }, // Get all dogs info
-    addNewDogInfo: (ctx: Koa.Context) => {}, // Add new dog
+    addNewDogInfo: (ctx: Koa.Context) => {
+        const newRecord: Dog = ctx.request.body;
+        console.log('🚀 ~ file: dogControllers.ts:12 ~ newRecord:', newRecord);
+    }, // Add new dog
     getDogInfo: async (ctx: Koa.Context) => {
         const { id } = ctx.query;
         const result = await firebaseServices.getDoc('dog', id as string);

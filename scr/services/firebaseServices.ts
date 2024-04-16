@@ -6,6 +6,7 @@ import {
     getDoc,
     getDocs,
     doc,
+    setDoc,
 } from 'firebase/firestore';
 import firebaseInitialize from '../initialize/firebaseInitialize';
 
@@ -16,13 +17,9 @@ const firebaseServices = {
         collectionPath: CollectionPath,
         docId: string,
     ): Promise<DocumentData> {
-        const collectionRef = await doc(
-            firebase.getFirestore,
-            collectionPath,
-            docId,
-        );
-        const collectionSnapshot = await getDoc(collectionRef);
-        const data = collectionSnapshot.data();
+        const docRef = await doc(firebase.getFirestore, collectionPath, docId);
+        const docSnapshot = await getDoc(docRef);
+        const data = docSnapshot.data();
         console.log('🚀 ~ file: firebaseServices.ts:23 ~ getDoc ~ data:', data);
 
         return data;
@@ -43,11 +40,24 @@ const firebaseServices = {
 
         return dataList;
     },
-    addDoc(collectionPath: CollectionPath, addObj: any) {},
-    updateDoc(collectionPath: CollectionPath, docId: string, updateObj: any) {},
-    deleteDoc(collectionPath: CollectionPath, docId: string) {},
-    downloadFile(remoteFilePath: string) {},
-    uploadFile(remoteFilePath: string, filePath: string) {},
+    async addDoc(collectionPath: CollectionPath, docId: string, addObj: any) {
+        const docRef = await doc(firebase.getFirestore, collectionPath, docId);
+        const docSnapshot = await setDoc(docRef, addObj);
+        console.log(
+            '🚀 ~ file: firebaseServices.ts:54 ~ addDoc ~ docSnapshot:',
+            docSnapshot,
+        );
+
+        return docSnapshot;
+    },
+    async updateDoc(
+        collectionPath: CollectionPath,
+        docId: string,
+        updateObj: any,
+    ) {},
+    async deleteDoc(collectionPath: CollectionPath, docId: string) {},
+    async downloadFile(remoteFilePath: string) {},
+    async uploadFile(remoteFilePath: string, filePath: string) {},
 };
 
 export default firebaseServices;

@@ -3,6 +3,7 @@ import Router from 'koa-router';
 import logger from 'koa-logger';
 import dogRoutes from './scr/routes/dogRoutes';
 import authRoutes from './scr/routes/authRoutes';
+import bodyParser from 'koa-bodyparser';
 
 const koa = new Koa();
 const router = new Router();
@@ -14,6 +15,7 @@ const router = new Router();
 dogRoutes(router);
 authRoutes(router);
 
+koa.use(bodyParser());
 koa.use(router.routes());
 koa.use(logger());
 koa.listen(3003);
