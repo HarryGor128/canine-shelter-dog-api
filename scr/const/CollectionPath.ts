@@ -1,3 +1,3 @@
-type CollectionPath = 'dog';
+type CollectionPath = 'dog' | 'staff';
 
 export default CollectionPath;

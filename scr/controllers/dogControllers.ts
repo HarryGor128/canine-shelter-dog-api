@@ -15,8 +15,9 @@ const dogControllers = {
     addNewDogInfo: async (ctx: Koa.Context) => {
         const newRecord = ctx.request.body as Dog;
 
-        if (objTypeChecking(newRecord, new Dog())) {
+        if (!objTypeChecking(newRecord, new Dog())) {
             ctx.status = 400;
+            return;
         }
 
         const nextId = await firebaseServices.getNextId('dog', 'id');
@@ -52,8 +53,9 @@ const dogControllers = {
     updateDogInfo: async (ctx: Koa.Context) => {
         const updateRecord = ctx.request.body as Dog;
 
-        if (objTypeChecking(updateRecord, new Dog())) {
+        if (!objTypeChecking(updateRecord, new Dog())) {
             ctx.status = 400;
+            return;
         }
 
         const result = await firebaseServices.addDoc(

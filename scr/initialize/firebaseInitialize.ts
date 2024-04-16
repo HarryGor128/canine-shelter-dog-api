@@ -3,6 +3,7 @@ import { initializeApp } from 'firebase/app';
 import firebaseConfig from '../config/firebaseConfig';
 import { collection, doc, getFirestore } from 'firebase/firestore';
 import CollectionPath from '../const/CollectionPath';
+import { getAuth } from 'firebase/auth';
 
 const firebaseInitialize = () => {
     // Initialize Firebase
@@ -23,7 +24,12 @@ const firebaseInitialize = () => {
         return collectionRef;
     };
 
-    return { docRef, collectionRef };
+    const authRef = async () => {
+        const authRef = await getAuth(initialize);
+        return authRef;
+    };
+
+    return { docRef, collectionRef, authRef };
 };
 
 export default firebaseInitialize;

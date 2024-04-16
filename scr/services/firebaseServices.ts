@@ -12,10 +12,19 @@ import {
 } from 'firebase/firestore';
 import firebaseInitialize from '../initialize/firebaseInitialize';
 import Dog from '../types/Dog';
+import {
+    UserCredential,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+} from 'firebase/auth';
 
 type AllTypeKey = keyof Dog;
 
-const { docRef, collectionRef } = firebaseInitialize();
+type fireStoreRes = { result: boolean; msg: string };
+
+type authRes = fireStoreRes & { userCredential?: UserCredential };
+
+const { docRef, collectionRef, authRef } = firebaseInitialize();
 
 const firebaseServices = {
     async getDoc(
@@ -46,9 +55,9 @@ const firebaseServices = {
 
     async addDoc(
         collectionPath: CollectionPath,
-        docId: number,
+        docId: number | string,
         addObj: any,
-    ): Promise<{ result: boolean; msg: string }> {
+    ): Promise<fireStoreRes> {
         try {
             await setDoc(
                 await docRef(collectionPath, docId.toString()),
@@ -65,7 +74,7 @@ const firebaseServices = {
     async deleteDoc(
         collectionPath: CollectionPath,
         docId: string,
-    ): Promise<{ result: boolean; msg: string }> {
+    ): Promise<fireStoreRes> {
         try {
             await deleteDoc(await docRef(collectionPath, docId));
             return Promise.resolve({ result: true, msg: '' });
@@ -99,6 +108,53 @@ const firebaseServices = {
         );
 
         return data + 1;
+    },
+
+    async loginEmail(email: string, password: string): Promise<authRes> {
+        try {
+            const user = await signInWithEmailAndPassword(
+                await authRef(),
+                email,
+                password,
+            );
+
+            return Promise.resolve({
+                result: true,
+                msg: '',
+                userCredential: user,
+            });
+        } catch (error) {
+            console.log(
+                '🚀 ~ file: firebaseServices.ts:109 ~ login ~ error:',
+                error,
+            );
+            return Promise.resolve({ result: false, msg: error.toString() });
+        }
+    },
+
+    async registration(email: string, password: string): Promise<authRes> {
+        try {
+            const user = await createUserWithEmailAndPassword(
+                await authRef(),
+                email,
+                password,
+            );
+
+            return Promise.resolve({
+                result: true,
+                msg: '',
+                userCredential: user,
+            });
+        } catch (error) {
+            console.log(
+                '🚀 ~ file: firebaseServices.ts:134 ~ registration ~ error:',
+                error,
+            );
+            return Promise.resolve({
+                result: false,
+                msg: error.toString(),
+            });
+        }
     },
 };
 

@@ -1,3 +1,3 @@
 export default (a: Object, b: Object) => {
-    return Object.keys(a) === Object.keys(b);
+    return JSON.stringify(Object.keys(a)) === JSON.stringify(Object.keys(b));
 };
