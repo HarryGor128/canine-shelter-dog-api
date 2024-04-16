@@ -5,7 +5,7 @@ const dogRoutes = (router: Router<any, {}>) => {
     router.get('/getAllDogsInfo', dogControllers.getAllDogsInfo);
     router.post('/addNewDogInfo', dogControllers.addNewDogInfo);
     router.get('/getDogInfo/:id', dogControllers.getDogInfo);
-    router.put('/updateDogInfo/:id', dogControllers.updateDogInfo);
+    router.put('/updateDogInfo', dogControllers.updateDogInfo);
     router.delete('/deleteDogInfo/:id', dogControllers.deleteDogInfo);
 };
 

@@ -10,7 +10,9 @@ const dogControllers = {
             any
         >,
     ) => {
-        ctx.body = await firebaseServices.getCollection('dog');
+        const result = await firebaseServices.getCollection('dog');
+
+        ctx.body = result ? result : [];
     }, // Get all dogs info
     addNewDogInfo: (
         ctx: Application.ParameterizedContext<
@@ -19,13 +21,21 @@ const dogControllers = {
             any
         >,
     ) => {}, // Add new dog
-    getDogInfo: (
+    getDogInfo: async (
         ctx: Application.ParameterizedContext<
             any,
             Router.IRouterParamContext<any, {}>,
             any
         >,
-    ) => {}, // Get dog info by id
+    ) => {
+        const result = await firebaseServices.getDoc('dog', ctx.params.id);
+
+        if (result) {
+            ctx.body = result;
+        } else {
+            ctx.status = 404;
+        }
+    }, // Get dog info by id
     updateDogInfo: (
         ctx: Application.ParameterizedContext<
             any,
