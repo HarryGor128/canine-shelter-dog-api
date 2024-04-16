@@ -1,34 +1,16 @@
-import Application from 'koa';
-import Router from 'koa-router';
+import Koa from 'koa';
 import firebaseServices from '../services/firebaseServices';
 
 const dogControllers = {
-    getAllDogsInfo: async (
-        ctx: Application.ParameterizedContext<
-            any,
-            Router.IRouterParamContext<any, {}>,
-            any
-        >,
-    ) => {
+    getAllDogsInfo: async (ctx: Koa.Context) => {
         const result = await firebaseServices.getCollection('dog');
 
         ctx.body = result ? result : [];
     }, // Get all dogs info
-    addNewDogInfo: (
-        ctx: Application.ParameterizedContext<
-            any,
-            Router.IRouterParamContext<any, {}>,
-            any
-        >,
-    ) => {}, // Add new dog
-    getDogInfo: async (
-        ctx: Application.ParameterizedContext<
-            any,
-            Router.IRouterParamContext<any, {}>,
-            any
-        >,
-    ) => {
-        const result = await firebaseServices.getDoc('dog', ctx.params.id);
+    addNewDogInfo: (ctx: Koa.Context) => {}, // Add new dog
+    getDogInfo: async (ctx: Koa.Context) => {
+        const { id } = ctx.query;
+        const result = await firebaseServices.getDoc('dog', id as string);
 
         if (result) {
             ctx.body = result;
@@ -36,20 +18,8 @@ const dogControllers = {
             ctx.status = 404;
         }
     }, // Get dog info by id
-    updateDogInfo: (
-        ctx: Application.ParameterizedContext<
-            any,
-            Router.IRouterParamContext<any, {}>,
-            any
-        >,
-    ) => {}, // Update dog info by id
-    deleteDogInfo: (
-        ctx: Application.ParameterizedContext<
-            any,
-            Router.IRouterParamContext<any, {}>,
-            any
-        >,
-    ) => {}, // Delete dog info by id
+    updateDogInfo: (ctx: Koa.Context) => {}, // Update dog info by id
+    deleteDogInfo: (ctx: Koa.Context) => {}, // Delete dog info by id
 };
 
 export default dogControllers;
