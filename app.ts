@@ -8,9 +8,6 @@ import bodyParser from 'koa-bodyparser';
 const koa = new Koa();
 const router = new Router();
 
-// Initialize API
-// firebaseInitialize();
-
 // Add Router Here
 dogRoutes(router);
 authRoutes(router);
