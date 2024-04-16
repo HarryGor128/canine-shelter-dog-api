@@ -1,7 +1,6 @@
 import Koa from 'koa';
 import Router from 'koa-router';
 import logger from 'koa-logger';
-import firebaseInitialize from './scr/initialize/firebaseInitialize';
 import dogRoutes from './scr/routes/dogRoutes';
 import authRoutes from './scr/routes/authRoutes';
 
@@ -9,7 +8,7 @@ const koa = new Koa();
 const router = new Router();
 
 // Initialize API
-firebaseInitialize();
+// firebaseInitialize();
 
 // Add Router Here
 dogRoutes(router);
