@@ -3,4 +3,4 @@ Start api:
 ```bash
 npm start
 ```
-Go to the project setting and copy the firebaseConfig to ~/scr/config/firebaseConfig.ts
+Go to the firebase console project setting and copy the firebaseConfig to ~/scr/config/firebaseConfig.ts
