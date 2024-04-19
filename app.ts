@@ -18,5 +18,5 @@ authRoutes(router);
 koa.use(bodyParser());
 koa.use(router.routes());
 koa.use(logger());
-koa.listen(3000);
+koa.listen(process.env.PORT);
 // console.log('Debug link: http://localhost:3003/');
