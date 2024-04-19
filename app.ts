@@ -7,6 +7,7 @@ import logger from 'koa-logger';
 import dogRoutes from './scr/routes/dogRoutes';
 import authRoutes from './scr/routes/authRoutes';
 import bodyParser from 'koa-bodyparser';
+import cors from '@koa/cors';
 
 const koa = new Koa();
 const router = new Router();
@@ -16,6 +17,7 @@ dogRoutes(router);
 authRoutes(router);
 
 koa.use(bodyParser());
+koa.use(cors());
 koa.use(router.routes());
 koa.use(logger());
 koa.listen(process.env.PORT);
