@@ -1,3 +1,6 @@
+import envLoader from './scr/utils/envLoader';
+envLoader();
+
 import Koa from 'koa';
 import Router from 'koa-router';
 import logger from 'koa-logger';

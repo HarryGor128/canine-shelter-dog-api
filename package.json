@@ -13,6 +13,7 @@
         "@types/koa-bodyparser": "^4.3.12",
         "@types/koa-router": "^7.4.8",
         "axios": "^1.6.8",
+        "dotenv": "^16.4.5",
         "firebase": "^10.10.0",
         "koa": "^2.15.3",
         "koa-bodyparser": "^4.4.1",
