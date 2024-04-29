@@ -92,6 +92,16 @@ const authControllers = {
 
         await goReg();
     },
+
+    // Query account role
+    roleQuery: async (ctx: Koa.Context) => {
+        const { email } = ctx.query;
+        const result = await firebaseServices.getDoc('staff', email as string);
+        if (result) {
+            ctx.status = 200;
+            ctx.response.body = result;
+        }
+    },
 };
 
 export default authControllers;
