@@ -8,6 +8,7 @@ const dogControllers = {
     // Get all dogs info
     getAllDogsInfo: async (ctx: Koa.Context) => {
         const result = await firebaseServices.getCollection('dog');
+        console.log('🚀 ~ getAllDogsInfo: ~ result:', result);
 
         ctx.body = result ? result : [];
     },
@@ -42,6 +43,7 @@ const dogControllers = {
     getDogInfo: async (ctx: Koa.Context) => {
         const { id } = ctx.query;
         const result = await firebaseServices.getDoc('dog', id as string);
+        console.log('🚀 ~ getDogInfo: ~ result:', result);
 
         if (result) {
             ctx.body = result;
@@ -64,6 +66,7 @@ const dogControllers = {
             updateRecord.id,
             updateRecord,
         );
+        console.log('🚀 ~ updateDogInfo: ~ result:', result);
 
         if (result.result) {
             ctx.status = 200;
@@ -78,6 +81,7 @@ const dogControllers = {
         const { id } = ctx.query;
 
         const result = await firebaseServices.deleteDoc('dog', id as string);
+        console.log('🚀 ~ deleteDogInfo: ~ result:', result);
 
         if (result.result) {
             ctx.status = 200;
@@ -100,6 +104,7 @@ const dogControllers = {
             uploadFile.fileName,
             uploadFile.base64,
         );
+        console.log('🚀 ~ uploadDogPhoto: ~ result:', result);
 
         if (result.result) {
             ctx.status = 200;

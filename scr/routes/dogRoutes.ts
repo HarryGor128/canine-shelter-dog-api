@@ -7,6 +7,7 @@ const dogRoutes = (router: Router<any, {}>) => {
     router.get('/dog/getDogInfo', dogControllers.getDogInfo);
     router.put('/dog/updateDogInfo', dogControllers.updateDogInfo);
     router.delete('/dog/deleteDogInfo', dogControllers.deleteDogInfo);
+    router.post('/dog/uploadDogPhoto', dogControllers.uploadDogPhoto);
 };
 
 export default dogRoutes;
