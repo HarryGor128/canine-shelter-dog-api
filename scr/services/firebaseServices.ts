@@ -17,7 +17,8 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { ref, uploadString } from 'firebase/storage';
+import { getDownloadURL, ref, uploadString } from 'firebase/storage';
+import FileStoragePath from '../const/FileStoragePath';
 
 type AllTypeKey = keyof Dog;
 
@@ -91,12 +92,12 @@ const firebaseServices = {
         base64String: string,
     ): Promise<fireStoreRes> {
         try {
-            await uploadString(
-                ref(await storageRef(), `${remoteFilePath}${filename}`),
-                base64String,
-                'data_url',
-            );
-            return Promise.resolve({ result: true, msg: '' });
+            const Ref = ref(await storageRef(), `${remoteFilePath}${filename}`);
+
+            await uploadString(Ref, base64String, 'data_url');
+
+            const url = await getDownloadURL(Ref);
+            return Promise.resolve({ result: true, msg: url });
         } catch (error) {
             console.log('🚀 ~ file: firebaseServices.ts:101 ~ error:', error);
             return Promise.resolve({ result: false, msg: error.toString() });

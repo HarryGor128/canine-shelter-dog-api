@@ -103,6 +103,7 @@ const dogControllers = {
 
         if (result.result) {
             ctx.status = 200;
+            ctx.body = result.msg;
         } else {
             ctx.status = 500;
             ctx.message = result.msg;
