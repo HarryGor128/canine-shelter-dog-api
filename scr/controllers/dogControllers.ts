@@ -2,6 +2,7 @@ import Koa from 'koa';
 import firebaseServices from '../services/firebaseServices';
 import Dog from '../types/Dog';
 import objTypeChecking from '../utils/objTypeChecking';
+import UploadFile from '../types/UploadFile';
 
 const dogControllers = {
     // Get all dogs info
@@ -77,6 +78,28 @@ const dogControllers = {
         const { id } = ctx.query;
 
         const result = await firebaseServices.deleteDoc('dog', id as string);
+
+        if (result.result) {
+            ctx.status = 200;
+        } else {
+            ctx.status = 500;
+            ctx.message = result.msg;
+        }
+    },
+
+    uploadDogPhoto: async (ctx: Koa.Context) => {
+        const uploadFile = ctx.request.body as UploadFile;
+
+        if (!objTypeChecking(uploadFile, new UploadFile())) {
+            ctx.status = 400;
+            return;
+        }
+
+        const result = await firebaseServices.uploadBase64(
+            'Dog/',
+            uploadFile.fileName,
+            uploadFile.base64,
+        );
 
         if (result.result) {
             ctx.status = 200;

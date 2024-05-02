@@ -17,6 +17,7 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
 } from 'firebase/auth';
+import { ref, uploadString } from 'firebase/storage';
 
 type AllTypeKey = keyof Dog;
 
@@ -24,7 +25,7 @@ type fireStoreRes = { result: boolean; msg: string };
 
 type authRes = fireStoreRes & { userCredential?: UserCredential };
 
-const { docRef, collectionRef, authRef } = firebaseInitialize();
+const { docRef, collectionRef, authRef, storageRef } = firebaseInitialize();
 
 const firebaseServices = {
     async getDoc(
@@ -84,9 +85,23 @@ const firebaseServices = {
         }
     },
 
-    async downloadFile(remoteFilePath: string) {},
-
-    async uploadFile(remoteFilePath: string, filePath: string) {},
+    async uploadBase64(
+        remoteFilePath: FileStoragePath,
+        filename: string,
+        base64String: string,
+    ): Promise<fireStoreRes> {
+        try {
+            await uploadString(
+                ref(await storageRef(), `${remoteFilePath}${filename}`),
+                base64String,
+                'data_url',
+            );
+            return Promise.resolve({ result: true, msg: '' });
+        } catch (error) {
+            console.log('🚀 ~ file: firebaseServices.ts:101 ~ error:', error);
+            return Promise.resolve({ result: false, msg: error.toString() });
+        }
+    },
 
     async getNextId(
         collectionPath: CollectionPath,

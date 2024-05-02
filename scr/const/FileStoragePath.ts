@@ -1,0 +1,1 @@
+type FileStoragePath = 'Dog/';

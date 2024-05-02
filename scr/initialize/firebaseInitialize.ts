@@ -4,6 +4,7 @@ import firebaseConfig from '../config/firebaseConfig';
 import { collection, doc, getFirestore } from 'firebase/firestore';
 import CollectionPath from '../const/CollectionPath';
 import { getAuth } from 'firebase/auth';
+import { getStorage } from 'firebase/storage';
 
 const firebaseInitialize = () => {
     // Initialize Firebase
@@ -29,7 +30,12 @@ const firebaseInitialize = () => {
         return authRef;
     };
 
-    return { docRef, collectionRef, authRef };
+    const storageRef = async () => {
+        const storageRef = await getStorage(initialize);
+        return storageRef;
+    };
+
+    return { docRef, collectionRef, authRef, storageRef };
 };
 
 export default firebaseInitialize;
