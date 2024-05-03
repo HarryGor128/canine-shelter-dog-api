@@ -11,6 +11,9 @@ const dogControllers = {
         console.log('🚀 ~ getAllDogsInfo: ~ result:', result);
 
         ctx.body = result ? result : [];
+        if (result.length === 0) {
+            ctx.status = 404;
+        }
     },
 
     // Add new dog

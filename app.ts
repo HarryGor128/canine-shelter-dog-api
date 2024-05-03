@@ -23,4 +23,4 @@ koa.use(cors());
 koa.use(router.routes());
 koa.use(logger());
 koa.listen(process.env.PORT);
-// console.log('Debug link: http://localhost:3003/');
+console.log(`Docs: http://localhost:${process.env.PORT}/index.html`);
