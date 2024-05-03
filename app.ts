@@ -8,6 +8,7 @@ import dogRoutes from './scr/routes/dogRoutes';
 import authRoutes from './scr/routes/authRoutes';
 import bodyParser from 'koa-bodyparser';
 import cors from '@koa/cors';
+import serve from 'koa-static';
 
 const koa = new Koa();
 const router = new Router();
@@ -16,6 +17,7 @@ const router = new Router();
 dogRoutes(router);
 authRoutes(router);
 
+koa.use(serve('./docs'));
 koa.use(bodyParser());
 koa.use(cors());
 koa.use(router.routes());
