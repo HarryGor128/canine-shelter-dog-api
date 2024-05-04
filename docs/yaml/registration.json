@@ -1,0 +1,25 @@
+{
+    "definitions": {
+        "registration": {
+            "id": "/registration",
+            "title": "Registration info",
+            "description": "Registration info",
+            "type": "object",
+            "properties": {
+                "email": {
+                    "description": "Registration email",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "Registration password",
+                    "type": "string"
+                },
+                "signUpCode": {
+                    "description": "Registration sign up code. For identify staff or public account",
+                    "type": "string"
+                }
+            },
+            "required": ["email", "password"]
+        }
+    }
+}

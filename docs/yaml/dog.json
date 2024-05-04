@@ -1,0 +1,42 @@
+{
+    "definitions": {
+        "dog": {
+            "id": "/dog",
+            "title": "Dog Detail",
+            "description": "A dog info",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "ID of the dog",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "name": {
+                    "description": "Dog name",
+                    "type": "string"
+                },
+                "dateOfBirth": {
+                    "description": "Dog date of birth",
+                    "type": "integer"
+                },
+                "sex": {
+                    "description": "Dog gender",
+                    "type": "'M' | 'F'"
+                },
+                "breeds": {
+                    "description": "Dog breeds",
+                    "type": "string"
+                },
+                "photo": {
+                    "description": "Dog photo url",
+                    "type": "url"
+                },
+                "description": {
+                    "description": "Dog description",
+                    "type": "string"
+                }
+            },
+            "required": ["id", "name", "dateOfBirth", "sex", "breeds", "photo"]
+        }
+    }
+}

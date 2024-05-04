@@ -1,0 +1,21 @@
+{
+    "definitions": {
+        "login": {
+            "id": "/login",
+            "title": "Login info",
+            "description": "Login info",
+            "type": "object",
+            "properties": {
+                "email": {
+                    "description": "Login email",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "Login password",
+                    "type": "string"
+                }
+            },
+            "required": ["email", "password"]
+        }
+    }
+}

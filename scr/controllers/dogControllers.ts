@@ -25,6 +25,17 @@ const dogControllers = {
             return;
         }
 
+        if (
+            !newRecord.name ||
+            newRecord.dateOfBirth < 0 ||
+            !newRecord.sex ||
+            !newRecord.breeds ||
+            !newRecord.photo
+        ) {
+            ctx.status = 400;
+            return;
+        }
+
         const nextId = await firebaseServices.getNextId('dog', 'id');
         newRecord.id = nextId;
         console.log(
@@ -35,7 +46,7 @@ const dogControllers = {
         const result = await firebaseServices.addDoc('dog', nextId, newRecord);
 
         if (result.result) {
-            ctx.status = 200;
+            ctx.status = 201;
         } else {
             ctx.status = 500;
             ctx.message = result.msg;
@@ -60,6 +71,17 @@ const dogControllers = {
         const updateRecord = ctx.request.body as Dog;
 
         if (!objTypeChecking(updateRecord, new Dog())) {
+            ctx.status = 400;
+            return;
+        }
+
+        if (
+            !updateRecord.name ||
+            updateRecord.dateOfBirth < 0 ||
+            !updateRecord.sex ||
+            !updateRecord.breeds ||
+            !updateRecord.photo
+        ) {
             ctx.status = 400;
             return;
         }
@@ -102,6 +124,11 @@ const dogControllers = {
             return;
         }
 
+        if (!uploadFile.base64 || !uploadFile.fileName) {
+            ctx.status = 400;
+            return;
+        }
+
         const result = await firebaseServices.uploadBase64(
             'Dog/',
             uploadFile.fileName,
@@ -110,7 +137,7 @@ const dogControllers = {
         console.log('🚀 ~ uploadDogPhoto: ~ result:', result);
 
         if (result.result) {
-            ctx.status = 200;
+            ctx.status = 201;
             ctx.body = result.msg;
         } else {
             ctx.status = 500;

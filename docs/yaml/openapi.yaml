@@ -4,7 +4,7 @@ info:
     title: Dog Canine Shelter API
     description: Dog Canine Shelter API.
     contact:
-        name: Master Chan
+        name: Master Harry Chan
         email: 237049104@stu.vtc.edu.hk
     license:
         name: Apache 2.0
@@ -18,7 +18,62 @@ tags:
     - name: Dog
       description: Access and perform CRUD operations for dog
 paths:
-    /getDogInfo/?id={id}:
+    /auth/login:
+        post:
+            tags:
+                - Auth
+            description: User login account
+            requestBody:
+                description: Login in JSON format
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: ./login.json#/definitions/login
+            responses:
+                '200':
+                    description: Login success
+                '400':
+                    description: Login field missing
+                '500':
+                    description: Login fail
+    /auth/registration:
+        post:
+            tags:
+                - Auth
+            description: User registration account
+            requestBody:
+                description: Registration in JSON format
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: ./registration.json#/definitions/registration
+            responses:
+                '200':
+                    description: Registration success
+                '400':
+                    description: Registration field missing
+                '500':
+                    description: Registration fail
+    /auth/roleQuery/?email={email}:
+        parameters:
+            - in: path
+              name: email
+              schema:
+                  type: string
+              required: true
+              description: Email of registered account
+        get:
+            tags:
+                - Auth
+            description: identify account is a staff account
+            responses:
+                '200':
+                    description: Result of query
+                '404':
+                    description: Record not found
+    /dog/getDogInfo/?id={id}:
         parameters:
             - in: path
               name: id
@@ -35,7 +90,7 @@ paths:
                     description: View of a dog record
                 '404':
                     description: Dog not found
-    /getAllDogsInfo:
+    /dog/getAllDogsInfo:
         get:
             tags:
                 - Dog
@@ -45,7 +100,7 @@ paths:
                     description: List of dogs record
                 '404':
                     description: Dog record not found
-    /addNewDogInfo:
+    /dog/addNewDogInfo:
         post:
             tags:
                 - Dog
@@ -56,7 +111,66 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: ./article.json#/definitions/article
+                            $ref: ./dog.json#/definitions/dog
+            responses:
+                '201':
+                    description: Dog added
+                '400':
+                    description: Dog object field missing
+                '500':
+                    description: Added fail
+    /dog/updateDogInfo:
+        put:
+            tags:
+                - Dog
+            description: Update a dog record
+            requestBody:
+                description: Dog in JSON format
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: ./dog.json#/definitions/dog
             responses:
                 '200':
-                    description: Dog added
+                    description: Dog updated
+                '400':
+                    description: Dog object field missing
+                '500':
+                    description: Update fail
+    /dog/deleteDogInfo/?id={id}:
+        parameters:
+            - in: path
+              name: id
+              schema:
+                  type: integer
+              required: true
+              description: Numeric id of the dog
+        delete:
+            tags:
+                - Dog
+            description: delete dog by id
+            responses:
+                '200':
+                    description: Dog deleted
+                '500':
+                    description: Delete fail
+    /dog/uploadDogPhoto:
+        post:
+            tags:
+                - Dog
+            description: Upload a dog photo
+            requestBody:
+                description: Dog in JSON format
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: ./uploadFile.json#/definitions/uploadFile
+            responses:
+                '201':
+                    description: Photo uploaded
+                '400':
+                    description: Upload file object field missing
+                '500':
+                    description: Upload fail

@@ -3,7 +3,8 @@
     "version": "1.0.0",
     "main": "app.ts",
     "scripts": {
-        "start": "ts-node app.ts",
+        "start": "npm run buildDocsWin && ts-node app.ts",
+        "buildDocsWin": "npx @redocly/cli build-docs ./docs/yaml/openapi.yaml && move %CD%\\redoc-static.html %CD%\\docs\\index.html",
         "buildDocsMac": "npx @redocly/cli build-docs ./docs/yaml/openapi.yaml && mv redoc-static.html docs/index.html && rm redoc-static.html"
     },
     "author": "",

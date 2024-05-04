@@ -1,0 +1,21 @@
+{
+    "definitions": {
+        "uploadFile": {
+            "id": "/uploadFile",
+            "title": "Upload file",
+            "description": "A uploadFile with base64 format",
+            "type": "object",
+            "properties": {
+                "base64": {
+                    "description": "Base 64 data",
+                    "type": "string"
+                },
+                "fileName": {
+                    "description": "File name",
+                    "type": "string"
+                }
+            },
+            "required": ["base64", "fileName"]
+        }
+    }
+}
