@@ -1,3 +1,3 @@
-type FileStoragePath = 'Dog/';
+type FileStoragePath = 'Dog';
 
 export default FileStoragePath;

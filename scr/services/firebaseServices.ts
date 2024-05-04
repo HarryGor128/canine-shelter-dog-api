@@ -17,12 +17,17 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { getDownloadURL, ref, uploadString } from 'firebase/storage';
+import {
+    getDownloadURL,
+    ref,
+    uploadString,
+    deleteObject,
+} from 'firebase/storage';
 import FileStoragePath from '../const/FileStoragePath';
 
 type AllTypeKey = keyof Dog;
 
-type fireStoreRes = { result: boolean; msg: string };
+export type fireStoreRes = { result: boolean; msg: string };
 
 type authRes = fireStoreRes & { userCredential?: UserCredential };
 
@@ -92,7 +97,10 @@ const firebaseServices = {
         base64String: string,
     ): Promise<fireStoreRes> {
         try {
-            const Ref = ref(await storageRef(), `${remoteFilePath}${filename}`);
+            const Ref = ref(
+                await storageRef(),
+                `${remoteFilePath}/${filename}`,
+            );
 
             await uploadString(Ref, base64String, 'data_url');
 
@@ -100,6 +108,32 @@ const firebaseServices = {
             return Promise.resolve({ result: true, msg: url });
         } catch (error) {
             console.log('🚀 ~ file: firebaseServices.ts:101 ~ error:', error);
+            return Promise.resolve({ result: false, msg: error.toString() });
+        }
+    },
+
+    async deleteFileByURL(
+        remoteFilePath: FileStoragePath,
+        fileUrl: string,
+    ): Promise<fireStoreRes> {
+        try {
+            const fileName = fileUrl
+                .replace(
+                    `https://firebasestorage.googleapis.com/v0/b/canine-shelter-dog-api.appspot.com/o/${remoteFilePath}%2F`,
+                    '',
+                )
+                .split('?')[0];
+
+            const Ref = ref(
+                await storageRef(),
+                `${remoteFilePath}/${fileName}`,
+            );
+
+            await deleteObject(Ref);
+
+            return Promise.resolve({ result: true, msg: '' });
+        } catch (error) {
+            console.log('🚀 ~ file: firebaseServices.ts:136 ~ error:', error);
             return Promise.resolve({ result: false, msg: error.toString() });
         }
     },

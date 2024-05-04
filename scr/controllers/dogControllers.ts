@@ -1,5 +1,5 @@
 import Koa from 'koa';
-import firebaseServices from '../services/firebaseServices';
+import firebaseServices, { fireStoreRes } from '../services/firebaseServices';
 import Dog from '../types/Dog';
 import objTypeChecking from '../utils/objTypeChecking';
 import UploadFile from '../types/UploadFile';
@@ -86,18 +86,36 @@ const dogControllers = {
             return;
         }
 
-        const result = await firebaseServices.addDoc(
+        const oldRecord = await firebaseServices.getDoc(
             'dog',
-            updateRecord.id,
-            updateRecord,
+            updateRecord.id.toString(),
         );
-        console.log('🚀 ~ updateDogInfo: ~ result:', result);
 
-        if (result.result) {
-            ctx.status = 200;
+        let deleteResult: fireStoreRes = { result: true, msg: '' };
+        if ((oldRecord as Dog).photo !== updateRecord.photo) {
+            deleteResult = await firebaseServices.deleteFileByURL(
+                'Dog',
+                (oldRecord as Dog).photo,
+            );
+        }
+
+        if (deleteResult.result) {
+            const result = await firebaseServices.addDoc(
+                'dog',
+                updateRecord.id,
+                updateRecord,
+            );
+            console.log('🚀 ~ updateDogInfo: ~ result:', result);
+
+            if (result.result) {
+                ctx.status = 200;
+            } else {
+                ctx.status = 500;
+                ctx.message = result.msg;
+            }
         } else {
             ctx.status = 500;
-            ctx.message = result.msg;
+            ctx.message = deleteResult.msg;
         }
     },
 
@@ -105,11 +123,23 @@ const dogControllers = {
     deleteDogInfo: async (ctx: Koa.Context) => {
         const { id } = ctx.query;
 
+        const deleteRecord = await firebaseServices.getDoc('dog', id as string);
+
         const result = await firebaseServices.deleteDoc('dog', id as string);
         console.log('🚀 ~ deleteDogInfo: ~ result:', result);
 
         if (result.result) {
-            ctx.status = 200;
+            const deletePhotoResult = await firebaseServices.deleteFileByURL(
+                'Dog',
+                (deleteRecord as Dog).photo,
+            );
+
+            if (deletePhotoResult) {
+                ctx.status = 200;
+            } else {
+                ctx.status = 500;
+                ctx.message = result.msg;
+            }
         } else {
             ctx.status = 500;
             ctx.message = result.msg;
@@ -130,7 +160,7 @@ const dogControllers = {
         }
 
         const result = await firebaseServices.uploadBase64(
-            'Dog/',
+            'Dog',
             uploadFile.fileName,
             uploadFile.base64,
         );
