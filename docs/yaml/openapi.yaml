@@ -174,3 +174,30 @@ paths:
                     description: Upload file object field missing
                 '500':
                     description: Upload fail
+    /dog/getBreedsList:
+        get:
+            tags:
+                - Dog
+            description: get all dog breed
+            responses:
+                '200':
+                    description: List of dogs breed
+                '404':
+                    description: Dog breed not found
+    /dog/getBreedImg/?breed={breed}:
+        parameters:
+            - in: path
+              name: breed
+              schema:
+                  type: string
+              required: true
+              description: breed of the dog
+        get:
+            tags:
+                - Dog
+            description: get image of a dog by breed
+            responses:
+                '200':
+                    description: Url of the dog image
+                '404':
+                    description: Dog image not found

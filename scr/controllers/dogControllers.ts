@@ -3,6 +3,7 @@ import firebaseServices, { fireStoreRes } from '../services/firebaseServices';
 import Dog from '../types/Dog';
 import objTypeChecking from '../utils/objTypeChecking';
 import UploadFile from '../types/UploadFile';
+import dogServices from '../services/dogServices';
 
 const dogControllers = {
     // Get all dogs info
@@ -172,6 +173,41 @@ const dogControllers = {
         } else {
             ctx.status = 500;
             ctx.message = result.msg;
+        }
+    },
+
+    getBreedsList: async (ctx: Koa.Context) => {
+        const result = await dogServices.getBreedsList();
+
+        let breedsList: string[] = [];
+
+        for (let key in result.message) {
+            breedsList.push(key);
+        }
+        console.log(
+            '🚀 ~ file: dogControllers.ts:187 ~ getBreedsList: ~ breedsList:',
+            breedsList,
+        );
+
+        if (result) {
+            ctx.body = breedsList;
+        } else {
+            ctx.status = 404;
+        }
+    },
+
+    getBreedImg: async (ctx: Koa.Context) => {
+        const { breed } = ctx.query;
+        const result = await dogServices.getBreedImg(breed as string);
+        console.log(
+            '🚀 ~ file: dogControllers.ts:201 ~ getBreedImg: ~ result:',
+            result,
+        );
+
+        if (result) {
+            ctx.body = result;
+        } else {
+            ctx.status = 404;
         }
     },
 };
