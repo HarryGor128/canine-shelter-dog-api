@@ -147,6 +147,7 @@ const dogControllers = {
         }
     },
 
+    // Upload dog photo
     uploadDogPhoto: async (ctx: Koa.Context) => {
         const uploadFile = ctx.request.body as UploadFile;
 
@@ -176,6 +177,7 @@ const dogControllers = {
         }
     },
 
+    // Get breeds list
     getBreedsList: async (ctx: Koa.Context) => {
         const result = await dogServices.getBreedsList();
 
@@ -196,6 +198,7 @@ const dogControllers = {
         }
     },
 
+    // Get breed image
     getBreedImg: async (ctx: Koa.Context) => {
         const { breed } = ctx.query;
         const result = await dogServices.getBreedImg(breed as string);
@@ -207,6 +210,22 @@ const dogControllers = {
         if (result) {
             ctx.body = result;
         } else {
+            ctx.status = 404;
+        }
+    },
+
+    // Get dog id by list of id
+    getDogWithList: async (ctx: Koa.Context) => {
+        const { id } = ctx.query;
+
+        const result = await firebaseServices.getCollection(
+            'dog',
+            'id',
+            JSON.parse(id as string) as number[],
+        );
+
+        ctx.body = result ? result : [];
+        if (result.length === 0) {
             ctx.status = 404;
         }
     },

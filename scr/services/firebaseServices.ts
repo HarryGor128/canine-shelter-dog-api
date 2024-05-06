@@ -9,6 +9,7 @@ import {
     orderBy,
     query,
     setDoc,
+    where,
 } from 'firebase/firestore';
 import firebaseInitialize from '../initialize/firebaseInitialize';
 import Dog from '../types/Dog';
@@ -47,11 +48,16 @@ const firebaseServices = {
 
     async getCollection(
         collectionPath: CollectionPath,
+        field?: string,
+        key?: number[] | string[],
     ): Promise<DocumentData[]> {
+        const colRef = await collectionRef(collectionPath);
+
         const collectionSnapshot = await getDocs(
-            await collectionRef(collectionPath),
+            key && field ? query(colRef, where(field, 'in', key)) : colRef,
         );
-        const dataList = collectionSnapshot.docs.map((doc) => doc.data());
+        let dataList = collectionSnapshot.docs.map((doc) => doc.data());
+
         console.log(
             '🚀 ~ file: firebaseServices.ts:16 ~ getCollection ~ dataList:',
             dataList,

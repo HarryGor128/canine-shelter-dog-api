@@ -6,6 +6,7 @@
         "startWin": "npm run buildDocsWin && ts-node app.ts",
         "startMac": "npm run buildDocsMac && ts-node app.ts",
         "start": "ts-node app.ts",
+        "dev": "ts-node-dev --respawn --transpile-only app.ts",
         "buildDocsWin": "npx @redocly/cli build-docs ./docs/yaml/openapi.yaml && move %CD%\\redoc-static.html %CD%\\docs\\index.html",
         "buildDocsMac": "npx @redocly/cli build-docs ./docs/yaml/openapi.yaml && mv redoc-static.html docs/index.html"
     },
@@ -25,7 +26,8 @@
         "koa-bodyparser": "^4.4.1",
         "koa-logger": "^3.2.1",
         "koa-router": "^12.0.1",
-        "koa-static": "^5.0.0"
+        "koa-static": "^5.0.0",
+        "ts-node-dev": "^2.0.0"
     },
     "devDependencies": {
         "eslint": "^9.0.0",

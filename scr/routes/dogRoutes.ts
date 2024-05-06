@@ -10,6 +10,7 @@ const dogRoutes = (router: Router<any, {}>) => {
     router.post('/dog/uploadDogPhoto', dogControllers.uploadDogPhoto);
     router.get('/dog/getBreedsList', dogControllers.getBreedsList);
     router.get('/dog/getBreedImg', dogControllers.getBreedImg);
+    router.get('/dog/getDogWithList', dogControllers.getDogWithList);
 };
 
 export default dogRoutes;
