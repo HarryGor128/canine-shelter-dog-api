@@ -17,6 +17,8 @@ tags:
       description: API endpoints for user management
     - name: Dog
       description: Access and perform CRUD operations for dog
+    - name: Favorites
+      description: Access and perform CRUD operations for favorites
 paths:
     /auth/login:
         post:
@@ -218,3 +220,62 @@ paths:
                     description: List of dog info
                 '404':
                     description: Dog info not found
+    /favorites/getUserFavoritesList?email={email}:
+        parameters:
+            - in: query
+              name: email
+              schema:
+                  type: string
+              required: true
+              description: Email of registered account
+        get:
+            tags:
+                - Favorites
+            description: get id list by registered account
+            responses:
+                '200':
+                    description: List of dog id
+                '404':
+                    description: Record not found
+    /favorites/addFavorite:
+        post:
+            tags:
+                - Favorites
+            description: Add a favorite
+            requestBody:
+                description: Favorite in JSON format
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: ./favorite.json#/definitions/favorite
+            responses:
+                '201':
+                    description: Favorite added
+                '400':
+                    description: Favorite object field missing
+                '500':
+                    description: Added fail
+    /favorites/deleteFavorite?email={email}&?id={id}:
+        parameters:
+            - in: query
+              name: id
+              schema:
+                  type: integer
+              required: true
+              description: Numeric id of the dog
+            - in: query
+              name: email
+              schema:
+                  type: string
+              required: true
+              description: Email of registered account
+        delete:
+            tags:
+                - Favorites
+            description: delete favorite by dog id
+            responses:
+                '200':
+                    description: Favorite deleted
+                '500':
+                    description: Delete fail

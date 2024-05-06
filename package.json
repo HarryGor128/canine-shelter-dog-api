@@ -3,8 +3,6 @@
     "version": "1.0.0",
     "main": "app.ts",
     "scripts": {
-        "startWin": "npm run buildDocsWin && ts-node app.ts",
-        "startMac": "npm run buildDocsMac && ts-node app.ts",
         "start": "ts-node app.ts",
         "dev": "ts-node-dev --respawn --transpile-only app.ts",
         "buildDocsWin": "npx @redocly/cli build-docs ./docs/yaml/openapi.yaml && move %CD%\\redoc-static.html %CD%\\docs\\index.html",

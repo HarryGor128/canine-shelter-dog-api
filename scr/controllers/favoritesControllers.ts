@@ -76,7 +76,7 @@ const favoritesControllers = {
         });
 
         if (result.result) {
-            ctx.status = 201;
+            ctx.status = 200;
         } else {
             ctx.status = 500;
             ctx.message = result.msg;

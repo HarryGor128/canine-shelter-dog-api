@@ -1,0 +1,21 @@
+{
+    "definitions": {
+        "favorite": {
+            "id": "/favorite",
+            "title": "Favorite info",
+            "description": "Favorite info",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "Favorite dog id",
+                    "type": "number"
+                },
+                "email": {
+                    "description": "User email",
+                    "type": "string"
+                }
+            },
+            "required": ["id", "email"]
+        }
+    }
+}
