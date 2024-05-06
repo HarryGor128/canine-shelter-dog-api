@@ -42,7 +42,7 @@ const favoritesControllers = {
         const result = await firebaseServices.addDoc(
             'favorites',
             newRecord.email,
-            idList,
+            { id: idList },
         );
 
         if (result.result) {
