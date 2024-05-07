@@ -3,12 +3,12 @@ envLoader();
 
 import Koa from 'koa';
 import Router from 'koa-router';
-import logger from 'koa-logger';
-import dogRoutes from './scr/routes/dogRoutes';
-import authRoutes from './scr/routes/authRoutes';
 import bodyParser from 'koa-bodyparser';
 import cors from '@koa/cors';
 import serve from 'koa-static';
+import logger from 'koa-logger';
+import dogRoutes from './scr/routes/dogRoutes';
+import authRoutes from './scr/routes/authRoutes';
 import favoritesRoutes from './scr/routes/favoritesRoutes';
 
 const koa = new Koa();
