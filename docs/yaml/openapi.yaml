@@ -212,7 +212,7 @@ paths:
               required: true
               description: List of the dog id
         get:
-            tag:
+            tags:
                 - Dog
             description: get dog info by list of id
             responses:
