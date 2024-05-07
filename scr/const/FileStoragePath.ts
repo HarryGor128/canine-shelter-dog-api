@@ -1,3 +1,3 @@
-type FileStoragePath = 'Dog';
+type FileStoragePath = 'Dog' | 'Chat';
 
 export default FileStoragePath;

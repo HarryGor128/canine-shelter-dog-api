@@ -135,11 +135,11 @@ const dogControllers = {
                 (deleteRecord as Dog).photo,
             );
 
-            if (deletePhotoResult) {
+            if (deletePhotoResult.result) {
                 ctx.status = 200;
             } else {
                 ctx.status = 500;
-                ctx.message = result.msg;
+                ctx.message = deletePhotoResult.msg;
             }
         } else {
             ctx.status = 500;
