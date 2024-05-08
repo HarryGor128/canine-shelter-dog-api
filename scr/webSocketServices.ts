@@ -7,7 +7,9 @@ import ChatMessage from './types/ChatMessage';
 const { collectionRef } = firebaseInitialize();
 
 const webSocketServices = async () => {
-    const wsService = new WebSocket.Server({ port: 10000 });
+    const wsService = new WebSocket.Server({
+        port: Number.parseInt(process.env.PORT),
+    });
 
     const colRef = await collectionRef('chat');
 
