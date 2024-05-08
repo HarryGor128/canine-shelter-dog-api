@@ -1,0 +1,38 @@
+{
+    "definitions": {
+        "chatMessage": {
+            "id": "/chatMessage",
+            "title": "Dog Detail",
+            "description": "A chat message",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "ID of the message",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "email": {
+                    "description": "Sender email",
+                    "type": "string"
+                },
+                "msg": {
+                    "description": "Message content",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Message type",
+                    "type": "'text' | 'img'"
+                },
+                "createTime": {
+                    "description": "Message create time",
+                    "type": "integer"
+                },
+                "lastUpdate": {
+                    "description": "Message last update time",
+                    "type": "integer"
+                }
+            },
+            "required": ["id", "name", "dateOfBirth", "sex", "breeds", "photo"]
+        }
+    }
+}

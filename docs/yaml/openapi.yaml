@@ -19,6 +19,8 @@ tags:
       description: Access and perform CRUD operations for dog
     - name: Favorites
       description: Access and perform CRUD operations for favorites
+    - name: Chat
+      description: Access and perform CRUD operations for chat room
 paths:
     /auth/login:
         post:
@@ -279,3 +281,88 @@ paths:
                     description: Favorite deleted
                 '500':
                     description: Delete fail
+    /chat/getChatAllHistory:
+        get:
+            tags:
+                - Chat
+            description: get all chat room history
+            responses:
+                '200':
+                    description: List of chat record
+                '404':
+                    description: Chat record not found
+                    /dog/addNewDogInfo:
+    /chat/addMessage:
+        post:
+            tags:
+                - Chat
+            description: Send a message to chat room
+            requestBody:
+                description: Chat message in JSON format
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: ./chatMessage.json#/definitions/chatMessage
+            responses:
+                '201':
+                    description: Chat message sent
+                '400':
+                    description: Chat message object field missing
+                '500':
+                    description: Added fail
+    /chat/updateMessage:
+        put:
+            tags:
+                - Chat
+            description: Update a chat message record
+            requestBody:
+                description: Chat message in JSON format
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: ./chatMessage.json#/definitions/chatMessage
+            responses:
+                '200':
+                    description: Chat message updated
+                '400':
+                    description: Chat message object field missing
+                '500':
+                    description: Update fail
+    /chat/deleteMessage?id={id}:
+        parameters:
+            - in: query
+              name: id
+              schema:
+                  type: integer
+              required: true
+              description: Numeric id of the chat message
+        delete:
+            tags:
+                - Chat
+            description: delete chat message by id
+            responses:
+                '200':
+                    description: Chat message deleted
+                '500':
+                    description: Delete fail
+    /chat/uploadImage:
+        post:
+            tags:
+                - Chat
+            description: Upload a message photo
+            requestBody:
+                description: Chat message in JSON format
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: ./uploadFile.json#/definitions/uploadFile
+            responses:
+                '201':
+                    description: Photo uploaded
+                '400':
+                    description: Upload file object field missing
+                '500':
+                    description: Upload fail
