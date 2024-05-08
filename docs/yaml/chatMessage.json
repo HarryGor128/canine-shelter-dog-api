@@ -32,7 +32,14 @@
                     "type": "integer"
                 }
             },
-            "required": ["id", "name", "dateOfBirth", "sex", "breeds", "photo"]
+            "required": [
+                "id",
+                "email",
+                "msg",
+                "type",
+                "createTime",
+                "lastUpdate"
+            ]
         }
     }
 }
