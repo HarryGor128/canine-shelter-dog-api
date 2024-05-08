@@ -12,14 +12,19 @@ const webSocketServices = async () => {
     const colRef = await collectionRef('chat');
 
     wsService.on('connection', (ws) => {
+        let initialLoad = true;
         onSnapshot(colRef, (snapshot) => {
             snapshot.docChanges().forEach((change) => {
+                if (initialLoad) {
+                    return;
+                }
                 const msg: WebSocketMsg = {
                     changeType: change.type,
                     data: change.doc.data() as ChatMessage,
                 };
                 ws.send(JSON.stringify(msg));
             });
+            initialLoad = false;
         });
     });
 };

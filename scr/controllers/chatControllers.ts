@@ -8,13 +8,16 @@ const chatControllers = {
     // Get all chat history
     getChatAllHistory: async (ctx: Koa.Context) => {
         const result = await firebaseServices.getCollection('chat');
+        const sortList = result.sort((x, y) => {
+            return x['createTime'] - y['createTime'];
+        });
         console.log(
-            '🚀 ~ file: chatControllers.ts:6 ~ getChatAllHistory: ~ result:',
-            result,
+            '🚀 ~ file: chatControllers.ts:14 ~ sortList ~ sortList:',
+            sortList,
         );
 
-        ctx.body = result ? result : [];
-        if (result.length === 0) {
+        ctx.body = sortList ? sortList : [];
+        if (sortList.length === 0) {
             ctx.status = 404;
         }
     },
@@ -77,7 +80,7 @@ const chatControllers = {
         }
 
         const result = await firebaseServices.addDoc(
-            'dog',
+            'chat',
             updateRecord.id,
             updateRecord,
         );
@@ -98,14 +101,17 @@ const chatControllers = {
     deleteMessage: async (ctx: Koa.Context) => {
         const { id } = ctx.query;
 
-        const deleteRecord = await firebaseServices.getDoc('dog', id as string);
+        const deleteRecord = await firebaseServices.getDoc(
+            'chat',
+            id as string,
+        );
 
-        const result = await firebaseServices.deleteDoc('dog', id as string);
+        const result = await firebaseServices.deleteDoc('chat', id as string);
         console.log('🚀 ~ deleteDogInfo: ~ result:', result);
 
         if (result.result) {
             const deletePhotoResult: fireStoreRes =
-                (deleteRecord as ChatMessage).type === 'img'
+                (deleteRecord as ChatMessage).type === 'text'
                     ? { result: true, msg: '' }
                     : await firebaseServices.deleteFileByURL(
                           'Chat',
