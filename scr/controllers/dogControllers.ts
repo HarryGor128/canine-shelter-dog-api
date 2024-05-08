@@ -9,7 +9,6 @@ const dogControllers = {
     // Get all dogs info
     getAllDogsInfo: async (ctx: Koa.Context) => {
         const result = await firebaseServices.getCollection('dog');
-        console.log('🚀 ~ getAllDogsInfo: ~ result:', result);
 
         ctx.body = result ? result : [];
         if (result.length === 0) {
@@ -20,6 +19,10 @@ const dogControllers = {
     // Add new dog
     addNewDogInfo: async (ctx: Koa.Context) => {
         const newRecord = ctx.request.body as Dog;
+        console.log(
+            '🚀 ~ file: dogControllers.ts:26 ~ addNewDogInfo: ~ newRecord:',
+            newRecord,
+        );
 
         if (!objTypeChecking(newRecord, new Dog())) {
             ctx.status = 400;
@@ -45,6 +48,10 @@ const dogControllers = {
         );
 
         const result = await firebaseServices.addDoc('dog', nextId, newRecord);
+        console.log(
+            '🚀 ~ file: dogControllers.ts:55 ~ addNewDogInfo: ~ result:',
+            result,
+        );
 
         if (result.result) {
             ctx.status = 201;
@@ -58,7 +65,6 @@ const dogControllers = {
     getDogInfo: async (ctx: Koa.Context) => {
         const { id } = ctx.query;
         const result = await firebaseServices.getDoc('dog', id as string);
-        console.log('🚀 ~ getDogInfo: ~ result:', result);
 
         if (result) {
             ctx.body = result;
@@ -70,6 +76,10 @@ const dogControllers = {
     // Update dog info by id
     updateDogInfo: async (ctx: Koa.Context) => {
         const updateRecord = ctx.request.body as Dog;
+        console.log(
+            '🚀 ~ file: dogControllers.ts:87 ~ updateDogInfo: ~ updateRecord:',
+            updateRecord,
+        );
 
         if (!objTypeChecking(updateRecord, new Dog())) {
             ctx.status = 400;
@@ -98,6 +108,10 @@ const dogControllers = {
                 'Dog',
                 (oldRecord as Dog).photo,
             );
+            console.log(
+                '🚀 ~ file: dogControllers.ts:111 ~ updateDogInfo: ~ deleteResult:',
+                deleteResult,
+            );
         }
 
         if (deleteResult.result) {
@@ -106,7 +120,10 @@ const dogControllers = {
                 updateRecord.id,
                 updateRecord,
             );
-            console.log('🚀 ~ updateDogInfo: ~ result:', result);
+            console.log(
+                '🚀 ~ file: dogControllers.ts:123 ~ updateDogInfo: ~ result:',
+                result,
+            );
 
             if (result.result) {
                 ctx.status = 200;
@@ -123,16 +140,27 @@ const dogControllers = {
     // Delete dog info by id
     deleteDogInfo: async (ctx: Koa.Context) => {
         const { id } = ctx.query;
+        console.log(
+            '🚀 ~ file: dogControllers.ts:143 ~ deleteDogInfo: ~ id:',
+            id,
+        );
 
         const deleteRecord = await firebaseServices.getDoc('dog', id as string);
 
         const result = await firebaseServices.deleteDoc('dog', id as string);
-        console.log('🚀 ~ deleteDogInfo: ~ result:', result);
+        console.log(
+            '🚀 ~ file: dogControllers.ts:147 ~ deleteDogInfo: ~ result:',
+            result,
+        );
 
         if (result.result) {
             const deletePhotoResult = await firebaseServices.deleteFileByURL(
                 'Dog',
                 (deleteRecord as Dog).photo,
+            );
+            console.log(
+                '🚀 ~ file: dogControllers.ts:157 ~ deleteDogInfo: ~ deletePhotoResult:',
+                deletePhotoResult,
             );
 
             if (deletePhotoResult.result) {
@@ -166,7 +194,10 @@ const dogControllers = {
             uploadFile.fileName,
             uploadFile.base64,
         );
-        console.log('🚀 ~ uploadDogPhoto: ~ result:', result);
+        console.log(
+            '🚀 ~ file: dogControllers.ts:194 ~ uploadDogPhoto: ~ result:',
+            result,
+        );
 
         if (result.result) {
             ctx.status = 201;
@@ -186,10 +217,6 @@ const dogControllers = {
         for (let key in result.message) {
             breedsList.push(key);
         }
-        console.log(
-            '🚀 ~ file: dogControllers.ts:187 ~ getBreedsList: ~ breedsList:',
-            breedsList,
-        );
 
         if (result) {
             ctx.body = breedsList;
@@ -202,10 +229,6 @@ const dogControllers = {
     getBreedImg: async (ctx: Koa.Context) => {
         const { breed } = ctx.query;
         const result = await dogServices.getBreedImg(breed as string);
-        console.log(
-            '🚀 ~ file: dogControllers.ts:201 ~ getBreedImg: ~ result:',
-            result,
-        );
 
         if (result) {
             ctx.body = result;
