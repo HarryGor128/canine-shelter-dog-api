@@ -2,7 +2,7 @@
     "definitions": {
         "chatMessage": {
             "id": "/chatMessage",
-            "title": "Dog Detail",
+            "title": "Chat Message",
             "description": "A chat message",
             "type": "object",
             "properties": {
