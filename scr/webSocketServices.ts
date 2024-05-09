@@ -8,8 +8,12 @@ const { collectionRef } = firebaseInitialize();
 
 const webSocketServices = async () => {
     const wsService = new WebSocket.Server({
-        port: Number.parseInt(process.env.PORT),
+        port: Number.parseInt(process.env.PORT ? process.env.PORT : ''),
     });
+    console.log(
+        '🚀 ~ file: webSocketServices.ts:13 ~ webSocketServices ~ process.env.PORT:',
+        process.env.PORT,
+    );
 
     const colRef = await collectionRef('chat');
 
