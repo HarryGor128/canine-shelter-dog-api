@@ -1,0 +1,21 @@
+{
+    "definitions": {
+        "websocketMessage": {
+            "id": "/websocketMessage",
+            "title": "Websocket Message",
+            "description": "A websocket message",
+            "type": "object",
+            "properties": {
+                "changeType": {
+                    "description": "Message change type",
+                    "type": "'added' | 'modified' | 'removed'"
+                },
+                "data": {
+                    "description": "Chat Message data",
+                    "type": "ChatMessage"
+                }
+            },
+            "required": ["changeType", "data"]
+        }
+    }
+}

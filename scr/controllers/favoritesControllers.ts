@@ -37,6 +37,7 @@ const favoritesControllers = {
             newRecord.email,
         );
 
+        idList = idList.filter((item) => item !== newRecord.id);
         idList.push(newRecord.id);
 
         const result = await firebaseServices.addDoc(

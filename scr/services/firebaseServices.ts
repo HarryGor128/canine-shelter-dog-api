@@ -43,7 +43,7 @@ const firebaseServices = {
         const data = docSnapshot.data();
         console.log('🚀 ~ file: firebaseServices.ts:23 ~ getDoc ~ data:', data);
 
-        return data;
+        return data ? data : {};
     },
 
     async getCollection(
