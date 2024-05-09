@@ -28,6 +28,9 @@ tags:
 paths:
     /:
         post:
+            tags:
+                - WebSocket
+            description: WebSocket signal
             requestBody:
                 description: A message from the chat room
                 content:
