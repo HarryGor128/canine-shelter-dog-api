@@ -38,7 +38,7 @@ const favoritesCase = (koa: Koa) => {
 
         test('Delete dog from favorites list by user email', async () => {
             const result = await request(koa.callback()).delete(
-                '/dog/deleteDogInfo?id=0&email=freeac@test.com',
+                '/favorites/deleteFavorite?id=0&email=freeac@test.com',
             );
             expect(result.statusCode).toEqual(200);
         });
