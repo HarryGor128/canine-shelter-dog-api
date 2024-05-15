@@ -76,7 +76,7 @@ const chatCase = (koa: Koa) => {
 
         test('Delete chat message', async () => {
             const result = await request(koa.callback()).delete(
-                '/chat/deleteMessage?id=21',
+                '/chat/deleteMessage?id=22',
             );
             expect(result.statusCode).toEqual(200);
         });
